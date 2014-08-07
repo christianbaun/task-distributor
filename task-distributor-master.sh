@@ -4,8 +4,8 @@
 # description:  This script splits a POV-ray render job to multiple nodes,
 #               checks the progress and composes the image parts to create the
 #               desired image
-# author:       Dr. Christian Baun <wolkenrechnen@gmail.com>
-# url:          http://www.christianbaun.de
+# author:       Dr. Christian Baun --- http://www.christianbaun.de
+# url:          https://code.google.com/p/task-distributor/
 # license:      GPLv2
 # date:         August 6th 2014
 # version:      0.1
@@ -62,7 +62,7 @@ LOCKFILE='/glusterfs/povray/lockfile'
 IMAGE_PARTS_PATH='/glusterfs/povray'
 
 # Path of the remote script which executes POV-Ray on the nodes
-REMOTE_SCRIPT='/home/pi/povscript.bat'
+REMOTE_SCRIPT='/home/pi/task-distributor-worker.sh'
 
 IMG_PATH=/opt/povray/share/povray-3.7/scenes/objects/
 IMG_FILE=blob.pov
@@ -92,7 +92,7 @@ END=`expr ${IMG_HEIGHT} / ${NUM_NODES}`
 
 for ((i=1; i<=${NUM_NODES}; i+=1))
 do
-  ssh pi@${HOSTS_ARRAY[$i]} ${REMOTE_SCRIPT} ${NUM_NODES} ${IMG_WIDTH} ${IMG_HEIGHT} ${IMG_PATH} ${IMG_FILE} +FN +W${IMG_WIDTH} +H${IMG_HEIGHT} +O${OUTPUT_DIR} +SR${START} +ER${END} &
+  ssh pi@${HOSTS_ARRAY[$i]} ${REMOTE_SCRIPT} ${NUM_NODES} ${IMG_PATH} ${IMG_FILE} +FN +W${IMG_WIDTH} +H${IMG_HEIGHT} +O${OUTPUT_DIR} +SR${START} +ER${END} &
   START=`expr ${START} + ${IMG_HEIGHT} / ${NUM_NODES}`
   END=`expr ${END} + ${IMG_HEIGHT} / ${NUM_NODES}`
 done
