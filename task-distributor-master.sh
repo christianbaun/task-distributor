@@ -14,6 +14,8 @@
 # notes: 
 # ----------------------------------------------------------------------------
 
+# Start of the 1st sequential part
+SEQUENTIAL_TIME1_START=`date +%s`
 
 function usage
 {
@@ -30,9 +32,6 @@ Arguments:
 "
 exit 0
 }
-
-# These variables are of type integer
-typeset -i NUM_NODES IMG_WIDTH IMG_HEIGHT
 
 SCRIPT=${0##*/}
 IMG_WIDTH=
@@ -83,12 +82,18 @@ else
   fi
 fi
 
-# The variables $START and $END are of type integer
-typeset -i START END
+# End of the 1st sequential part
+SEQUENTIAL_TIME1_END=`date +%s`
+# Duration of the 1st sequential part
+SEQUENTIAL_TIME1=`expr ${SEQUENTIAL_TIME1_END} - ${SEQUENTIAL_TIME1_START}`
+
 # The first image part starts with row number 1
 START=1
 # This is the height (number of rows) of an image part
 END=`expr ${IMG_HEIGHT} / ${NUM_NODES}`
+
+# Start of the parallel part
+PARALLEL_TIME_START=`date +%s`
 
 for ((i=1; i<=${NUM_NODES}; i+=1))
 do
@@ -110,8 +115,16 @@ do
   done            
 done
 
+# End of the parallel part
+PARALLEL_TIME_END=`date +%s`
+# Duration of the parallel part
+PARALLEL_TIME=`expr ${PARALLEL_TIME_END} - ${PARALLEL_TIME_START}`
+
+# Start of the 2nd sequential part
+SEQUENTIAL_TIME2_START=`date +%s`
+
+# Compose image parts to create the final image
 if convert -set colorspace RGB `ls /glusterfs/povray/pi*.png` -append /tmp/test.png ; then
-  # Compose image parts to create the final image
   echo "Image parts have been composed."
 else
   echo "Unable to compose the image parts." && exit 1
@@ -130,3 +143,15 @@ if rm ${IMAGE_PARTS_PATH}/*.png ; then
 else
   echo "Unable to erase the image parts." && exit 1
 fi
+
+# End of the 1st sequential part
+SEQUENTIAL_TIME2_END=`date +%s`
+# Duration of the 2nd sequential part
+SEQUENTIAL_TIME2=`expr ${SEQUENTIAL_TIME2_END} - ${SEQUENTIAL_TIME2_START}`
+# Duration of the entire sequential part
+SEQUENTIAL_TIME=`expr ${SEQUENTIAL_TIME1} + ${SEQUENTIAL_TIME2}`
+
+echo 'Required time to process the parallel part:          ' ${PARALLEL_TIME}s
+echo 'Required time to process the 1st sequential part1:   ' ${SEQUENTIAL_TIME1}s
+echo 'Required time to process the 2nd sequential part2:   ' ${SEQUENTIAL_TIME2}s
+echo 'Required time to process the entire sequential part: ' ${SEQUENTIAL_TIME}s
