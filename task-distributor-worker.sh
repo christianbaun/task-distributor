@@ -28,9 +28,6 @@
 # Direct all output messages to local storage
 /opt/povray/bin/povray_3.7 $2$3 $4 $5 $6 $7 $8 $9 1>/dev/null 2>/tmp/povraymessages
 
-# These variables are of type integer
-typeset -i SIZE_TEMP SIZE_RESULT IMG_HEIGHT ROW_SIZE
-
 # Cut away the first 3 characters "+SR" from parameter $8 to obtain the
 # number of rows as integer
 SIZE_TEMP=`echo $8 | cut -c 4-`
@@ -45,9 +42,9 @@ IMG_WIDTH=`echo $5 | cut -c 3-`
 # Calculate the number of rows, each worker node will calculate
 ROW_SIZE=`expr ${IMG_HEIGHT} / ${1}`
 
-# Remove the black rows from the image to reduce the network traffic and the
-# amount of data which needs the master to process finally for creating the
-# final image
+# Remove the black rows from the image part to reduce the network traffic 
+# and the amount of data which needs the master to process finally for 
+# creating the final image
 convert -set colorspace RGB -define png:size=${IMG_WIDTH}x${IMG_HEIGHT} -extract ${IMG_WIDTH}x${ROW_SIZE}+0+${SIZE_RESULT} /tmp/`echo $3 | cut -f1 -d'.'`.png /tmp/`echo $3 | cut -f1 -d'.'`.png
 
 # Move the generated image part to a distributed file system which can be
