@@ -151,7 +151,7 @@ SEQUENTIAL_TIME2=`expr ${SEQUENTIAL_TIME2_END} - ${SEQUENTIAL_TIME2_START}`
 # Duration of the entire sequential part
 SEQUENTIAL_TIME=`expr ${SEQUENTIAL_TIME1} + ${SEQUENTIAL_TIME2}`
 
-echo 'Required time to process the parallel part:          ' ${PARALLEL_TIME}s
-echo 'Required time to process the 1st sequential part1:   ' ${SEQUENTIAL_TIME1}s
-echo 'Required time to process the 2nd sequential part2:   ' ${SEQUENTIAL_TIME2}s
-echo 'Required time to process the entire sequential part: ' ${SEQUENTIAL_TIME}s
+echo 'Required time to process the parallel part:          '${PARALLEL_TIME}s
+echo 'Required time to process the 1st sequential part:    '${SEQUENTIAL_TIME1}s
+echo 'Required time to process the 2nd sequential part:    '${SEQUENTIAL_TIME2}s
+echo 'Required time to process the entire sequential part: '${SEQUENTIAL_TIME}s
