@@ -8,9 +8,9 @@
 # url:          https://code.google.com/p/task-distributor/
 # license:      GPLv2
 # date:         August 6th 2014
-# version:      0.1
+# version:      1.0
 # bash_version: 4.2.37(1)-release
-# requires:     POV-Ray 3.7, ImageMagick 6.7.7
+# requires:     POV-Ray 3.7, ImageMagick 6.7.7, bc 1.06.95
 # notes: 
 # ----------------------------------------------------------------------------
 
@@ -19,16 +19,17 @@ SEQUENTIAL_TIME1_START=`date +%s.%N`
 
 function usage
 {
-echo "$SCRIPT -n nodes -x width -y height
+echo "$SCRIPT -n nodes -x width -y height -p path
 
 This script splits a POV-ray render job to multiple nodes, checks the 
 progress and composes the image parts to create the desired image
 
 Arguments:
 -h : show this message on screen
--n : number of nodes
--x : image width
--y : image height
+-n : number of nodes (2, 4, 8, 16, ...)
+-x : image width (800, 1600, 3200, ...)
+-y : image height (600, 1200, 2400, ...)
+-p : path for the lockfile and the image parts
 -f : force (if lockfile exists => erase and proceed)
 "
 exit 0
@@ -38,11 +39,8 @@ SCRIPT=${0##*/}
 IMG_WIDTH=
 IMG_HEIGHT=
 NUM_NODES=
-
-# Path of the lockfile on a file system, which can be accessed by all nodes
-LOCKFILE='/glusterfs/povray/lockfile'
-# Path of the image parts on a file system, which can be accessed by all nodes
-IMAGE_PARTS_PATH='/glusterfs/povray'
+LOCKFILE=
+IMAGE_PARTS_PATH=
 
 # Path of the remote script which executes POV-Ray on the nodes
 REMOTE_SCRIPT='/home/pi/task-distributor-worker.sh'
@@ -53,12 +51,13 @@ OUTPUT_DIR=/tmp/
 # Array with the hostnames (the first entry has index number 1 here)
 HOSTS_ARRAY=([1]=pi31 pi32 pi33 pi34 pi35 pi36 pi37 pi38)
 
-while getopts "hn:x:y:f" Arg ; do
+while getopts "hn:x:y:fp:" Arg ; do
   case $Arg in
     h) usage ;;
     n) NUM_NODES=$OPTARG ;;
     x) IMG_WIDTH=$OPTARG ;;
     y) IMG_HEIGHT=$OPTARG ;;
+    p) IMAGE_PARTS_PATH=$OPTARG ;;
     # If lockfile exists => erase it an proceed
     f) if [ -e ${LOCKFILE} ] ; then rm ${LOCKFILE} ; fi  ;;
     \?) echo "Invalid option: $OPTARG" >&2
@@ -67,7 +66,10 @@ while getopts "hn:x:y:f" Arg ; do
   esac
 done
 
-if [ "$NUM_NODES" -eq 0 ] || [ "$IMG_WIDTH" -eq 0 ] || [ "$IMG_HEIGHT" -eq 0 ] ; then
+# Path of the lockfile on a file system, which can be accessed by all nodes
+LOCKFILE=`echo "${IMAGE_PARTS_PATH}"/lockfile`
+
+if [ "$NUM_NODES" -eq 0 ] || [ "$IMG_WIDTH" -eq 0 ] || [ "$IMG_HEIGHT" -eq 0 ] || [ -z "$IMAGE_PARTS_PATH" ] ; then
    usage
    exit 1
 fi
