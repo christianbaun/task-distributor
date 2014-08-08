@@ -3,7 +3,7 @@ TASK-DISTRIBUTOR                                          v1.0 (August 8th 2014)
 
 SYNOPSIS
 --------
-
+task-distributor-master.sh -n nodes -x width -y height -p path
 
 DESCRIPTION
 -----------
@@ -56,19 +56,18 @@ needs the master to process finally for creating the final image.
 Finally, the script writes the hostname of the worker node into the lockfile to 
 inform the master node that the image part of this worker node is now available.
 
-
-
 EXAMPLE
 -------
 ./task-distributor-master.sh -n 8 -x 800 -y 600 -p /glusterfs/povray
 
 WEB SITE
 --------
-Visit the Task-Distributor for more information and the latest revision
+Visit the Task-Distributor for more information and the latest revision.
 
 http://code.google.com/p/task-distributor
 
 LICENSE
 -------
-GPLv2 or later
+GPLv2 or later.
+
 http://www.gnu.org/licenses/gpl-2.0.html
