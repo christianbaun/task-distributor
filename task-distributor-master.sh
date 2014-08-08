@@ -19,7 +19,7 @@ SEQUENTIAL_TIME1_START=`date +%s.%N`
 
 function usage
 {
-echo "$SCRIPT -n nodes -x width -y height -p path
+echo "$SCRIPT -n nodes -x width -y height -p path [-f] [-c]
 
 This script splits a POV-ray render job to multiple nodes, checks the 
 progress and composes the image parts to create the desired image
@@ -31,6 +31,7 @@ Arguments:
 -y : image height (600, 1200, 2400, ...)
 -p : path for the lockfile and the image parts
 -f : force (if lockfile exists => erase and proceed)
+-c : clean up (remove image parts afterwards)
 "
 exit 0
 }
@@ -51,7 +52,7 @@ OUTPUT_DIR=/tmp/
 # Array with the hostnames (the first entry has index number 1 here)
 HOSTS_ARRAY=([1]=pi31 pi32 pi33 pi34 pi35 pi36 pi37 pi38)
 
-while getopts "hn:x:y:fp:" Arg ; do
+while getopts "hn:x:y:fcp:" Arg ; do
   case $Arg in
     h) usage ;;
     n) NUM_NODES=$OPTARG ;;
@@ -60,6 +61,7 @@ while getopts "hn:x:y:fp:" Arg ; do
     p) IMAGE_PARTS_PATH=$OPTARG ;;
     # If lockfile exists => erase it an proceed
     f) if [ -e ${LOCKFILE} ] ; then rm ${LOCKFILE} ; fi  ;;
+    c) ;;
     \?) echo "Invalid option: $OPTARG" >&2
         exit 1
         ;;
