@@ -15,7 +15,7 @@
 # ----------------------------------------------------------------------------
 
 # Start of the 1st sequential part
-SEQUENTIAL_TIME1_START=`date +%s`
+SEQUENTIAL_TIME1_START=`date +%s.%N`
 
 function usage
 {
@@ -29,6 +29,7 @@ Arguments:
 -n : number of nodes
 -x : image width
 -y : image height
+-f : force (if lockfile exists => erase and proceed)
 "
 exit 0
 }
@@ -37,23 +38,6 @@ SCRIPT=${0##*/}
 IMG_WIDTH=
 IMG_HEIGHT=
 NUM_NODES=
-
-while getopts "hn:x:y:" Arg ; do
-  case $Arg in
-    h) usage ;;
-    n) NUM_NODES=$OPTARG ;;
-    x) IMG_WIDTH=$OPTARG ;;
-    y) IMG_HEIGHT=$OPTARG ;;
-    \?) echo "Invalid option: $OPTARG" >&2
-        exit 1
-        ;;
-  esac
-done
-
-if [ "$NUM_NODES" -eq 0 ] || [ "$IMG_WIDTH" -eq 0 ] || [ "$IMG_HEIGHT" -eq 0 ] ; then
-   usage
-   exit 1
-fi
 
 # Path of the lockfile on a file system, which can be accessed by all nodes
 LOCKFILE='/glusterfs/povray/lockfile'
@@ -69,6 +53,25 @@ OUTPUT_DIR=/tmp/
 # Array with the hostnames (the first entry has index number 1 here)
 HOSTS_ARRAY=([1]=pi31 pi32 pi33 pi34 pi35 pi36 pi37 pi38)
 
+while getopts "hn:x:y:f" Arg ; do
+  case $Arg in
+    h) usage ;;
+    n) NUM_NODES=$OPTARG ;;
+    x) IMG_WIDTH=$OPTARG ;;
+    y) IMG_HEIGHT=$OPTARG ;;
+    # If lockfile exists => erase it an proceed
+    f) if [ -e ${LOCKFILE} ] ; then rm ${LOCKFILE} ; fi  ;;
+    \?) echo "Invalid option: $OPTARG" >&2
+        exit 1
+        ;;
+  esac
+done
+
+if [ "$NUM_NODES" -eq 0 ] || [ "$IMG_WIDTH" -eq 0 ] || [ "$IMG_HEIGHT" -eq 0 ] ; then
+   usage
+   exit 1
+fi
+
 # Check if the lockfile already exists
 if [ -e ${LOCKFILE} ] ; then
   # Terminate the script, in case the lockfile already exists
@@ -83,9 +86,12 @@ else
 fi
 
 # End of the 1st sequential part
-SEQUENTIAL_TIME1_END=`date +%s`
+SEQUENTIAL_TIME1_END=`date +%s.%N`
 # Duration of the 1st sequential part
-SEQUENTIAL_TIME1=`expr ${SEQUENTIAL_TIME1_END} - ${SEQUENTIAL_TIME1_START}`
+# The "/1" is stupid, but it is required to get the "scale" working.
+# Otherwise the "scale" is just ignored
+# The sed command ensures that results < 1 have a leading 0 before the "."
+SEQUENTIAL_TIME1=`echo "scale=3 ; (${SEQUENTIAL_TIME1_END} - ${SEQUENTIAL_TIME1_START})/1" | bc | sed 's/^\./0./'`
 
 # The first image part starts with row number 1
 START=1
@@ -93,7 +99,7 @@ START=1
 END=`expr ${IMG_HEIGHT} / ${NUM_NODES}`
 
 # Start of the parallel part
-PARALLEL_TIME_START=`date +%s`
+PARALLEL_TIME_START=`date +%s.%N`
 
 for ((i=1; i<=${NUM_NODES}; i+=1))
 do
@@ -116,12 +122,14 @@ do
 done
 
 # End of the parallel part
-PARALLEL_TIME_END=`date +%s`
+PARALLEL_TIME_END=`date +%s.%N`
 # Duration of the parallel part
-PARALLEL_TIME=`expr ${PARALLEL_TIME_END} - ${PARALLEL_TIME_START}`
-
+# The "/1" is stupid, but it is required to get the "scale" working.
+# Otherwise the "scale" is just ignored
+# The sed command ensures that results < 1 have a leading 0 before the "."
+PARALLEL_TIME=`echo "scale=3 ; (${PARALLEL_TIME_END} - ${PARALLEL_TIME_START})/1" | bc | sed 's/^\./0./'`
 # Start of the 2nd sequential part
-SEQUENTIAL_TIME2_START=`date +%s`
+SEQUENTIAL_TIME2_START=`date +%s.%N`
 
 # Compose image parts to create the final image
 if convert -set colorspace RGB `ls /glusterfs/povray/pi*.png` -append /tmp/test.png ; then
@@ -145,13 +153,14 @@ else
 fi
 
 # End of the 1st sequential part
-SEQUENTIAL_TIME2_END=`date +%s`
+SEQUENTIAL_TIME2_END=`date +%s.%N`
 # Duration of the 2nd sequential part
-SEQUENTIAL_TIME2=`expr ${SEQUENTIAL_TIME2_END} - ${SEQUENTIAL_TIME2_START}`
-# Duration of the entire sequential part
-SEQUENTIAL_TIME=`expr ${SEQUENTIAL_TIME1} + ${SEQUENTIAL_TIME2}`
+# The "/1" is stupid, but it is required to get the "scale" working.
+# Otherwise the "scale" is just ignored
+# The sed command ensures that results < 1 have a leading 0 before the "."
+SEQUENTIAL_TIME2=`echo "scale=3 ; (${SEQUENTIAL_TIME2_END} - ${SEQUENTIAL_TIME2_START})/1" | bc | sed 's/^\./0./'`
 
-echo 'Required time to process the parallel part:          '${PARALLEL_TIME}s
 echo 'Required time to process the 1st sequential part:    '${SEQUENTIAL_TIME1}s
+echo 'Required time to process the parallel part:          '${PARALLEL_TIME}s
 echo 'Required time to process the 2nd sequential part:    '${SEQUENTIAL_TIME2}s
-echo 'Required time to process the entire sequential part: '${SEQUENTIAL_TIME}s
+
