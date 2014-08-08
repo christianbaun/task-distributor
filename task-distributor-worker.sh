@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # title:        task-distributor-worker.sh
-# description:  This script starts POV-ray render job according to the 
+# description:  This script starts the POV-ray render job according to the 
 #               instructions of the master node and stores the resulting
 #               image part on a distributed file system
 # author:       Dr. Christian Baun --- http://www.christianbaun.de
