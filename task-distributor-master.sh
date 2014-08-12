@@ -7,8 +7,8 @@
 # author:       Dr. Christian Baun --- http://www.christianbaun.de
 # url:          https://code.google.com/p/task-distributor/
 # license:      GPLv2
-# date:         August 6th 2014
-# version:      1.0
+# date:         August 12th 2014
+# version:      1.1
 # bash_version: 4.2.37(1)-release
 # requires:     POV-Ray 3.7, ImageMagick 6.7.7, bc 1.06.95
 # notes: 
@@ -135,11 +135,29 @@ PARALLEL_TIME=`echo "scale=3 ; (${PARALLEL_TIME_END} - ${PARALLEL_TIME_START})/1
 # Start of the 2nd sequential part
 SEQUENTIAL_TIME2_START=`date +%s.%N`
 
-# Compose image parts to create the final image
-if convert -set colorspace RGB `ls /glusterfs/povray/pi*.png` -append /tmp/test.png ; then
-  echo "Image parts have been composed."
+# if the number of nodes is 1
+if [ $1 -eq 1 ] ; then
+  # Only a single node was be used => no image parts need to be composed.
+  # Just copy the final image.
+  if cp /glusterfs/povray/pi*.png /tmp/test.png ; then
+    echo "Image has been copied."
+  else
+    echo "Unable to copy the image." && exit 1
+  fi
+# if the number of nodes is > 1
+elif [ $1 -gt 1 ] ; then
+  # More than a single node was used 
+  # Compose image parts to create the final image
+  if convert -set colorspace RGB `ls /glusterfs/povray/pi*.png` -append 
+/tmp/test.png ; then
+    echo "Image parts have been composed."
+  else
+    echo "Unable to compose the image parts." && exit 1
+  fi
+# if the number of nodes is not 1 and not > 1 than we have an error
 else
-  echo "Unable to compose the image parts." && exit 1
+    echo "An error occurred because the value of ${1} is not 0 and not greater 
+than 1." && exit 1
 fi
 
 if rm ${LOCKFILE} ; then
