@@ -42,6 +42,7 @@ IMG_HEIGHT=
 NUM_NODES=
 LOCKFILE=
 IMAGE_PARTS_PATH=
+CLEAN_UP=
 
 # Path of the remote script which executes POV-Ray on the nodes
 REMOTE_SCRIPT='/home/pi/task-distributor-worker.sh'
@@ -61,7 +62,7 @@ while getopts "hn:x:y:fcp:" Arg ; do
     p) IMAGE_PARTS_PATH=$OPTARG ;;
     # If lockfile exists => erase it an proceed
     f) if [ -e ${LOCKFILE} ] ; then rm ${LOCKFILE} ; fi  ;;
-    c) ;;
+    c) $CLEAN_UP=1 ;;
     \?) echo "Invalid option: $OPTARG" >&2
         exit 1
         ;;
@@ -122,6 +123,9 @@ do
     else
       echo "Wait for ${HOSTS_ARRAY[$i]} in lockfile." 
     fi
+    # Without the "sleep" command, a lot of CPU cycles are wasted and
+    # the execution time of the script raises a lot
+    sleep 1
   done            
 done
 
@@ -136,7 +140,7 @@ PARALLEL_TIME=`echo "scale=3 ; (${PARALLEL_TIME_END} - ${PARALLEL_TIME_START})/1
 SEQUENTIAL_TIME2_START=`date +%s.%N`
 
 # if the number of nodes is 1
-if [ $1 -eq 1 ] ; then
+if [ "$NUM_NODES" -eq 1 ] ; then
   # Only a single node was be used => no image parts need to be composed.
   # Just copy the final image.
   if cp /glusterfs/povray/pi*.png /tmp/test.png ; then
@@ -145,11 +149,10 @@ if [ $1 -eq 1 ] ; then
     echo "Unable to copy the image." && exit 1
   fi
 # if the number of nodes is > 1
-elif [ $1 -gt 1 ] ; then
+elif [ "$NUM_NODES" -gt 1 ] ; then
   # More than a single node was used 
   # Compose image parts to create the final image
-  if convert -set colorspace RGB `ls /glusterfs/povray/pi*.png` -append 
-/tmp/test.png ; then
+  if convert -set colorspace RGB `ls /glusterfs/povray/pi*.png` -append /tmp/test.png ; then
     echo "Image parts have been composed."
   else
     echo "Unable to compose the image parts." && exit 1
