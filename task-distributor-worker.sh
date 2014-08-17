@@ -71,5 +71,7 @@ fi
 mv /tmp/`echo $3 | cut -f1 -d'.'`.png /glusterfs/povray/`hostname`.png
 
 # Write the hostname of the worker node into the lockfile to inform the
-# master node that the image part of this worker node is now available
-echo "`hostname`" >> /glusterfs/povray/lockfile
+# master node that the image part of this worker node is now available.
+# Write the date and time into the lockfile too.
+# This helps to investigate performance problems.
+echo "`hostname` `date +%d.%m.%Y_%H:%M:%S`" >> /glusterfs/povray/lockfile

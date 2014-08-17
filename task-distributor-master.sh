@@ -31,7 +31,7 @@ Arguments:
 -y : image height (600, 1200, 2400, ...)
 -p : path for the lockfile and the image parts
 -f : force (if lockfile exists => erase and proceed)
--c : clean up (remove image parts afterwards)
+-c : clean up (remove image parts and lockfile afterwards)
 "
 exit 0
 }
@@ -42,7 +42,7 @@ IMG_HEIGHT=
 NUM_NODES=
 LOCKFILE=
 IMAGE_PARTS_PATH=
-CLEAN_UP=
+CLEAN_UP=0
 
 # Path of the remote script which executes POV-Ray on the nodes
 REMOTE_SCRIPT='/home/pi/task-distributor-worker.sh'
@@ -62,7 +62,8 @@ while getopts "hn:x:y:fcp:" Arg ; do
     p) IMAGE_PARTS_PATH=$OPTARG ;;
     # If lockfile exists => erase it an proceed
     f) if [ -e ${LOCKFILE} ] ; then rm ${LOCKFILE} ; fi  ;;
-    c) $CLEAN_UP=1 ;;
+    # If the flag has been set => $CLEAN_UP gets value 1
+    c) CLEAN_UP=1 ;;
     \?) echo "Invalid option: $OPTARG" >&2
         exit 1
         ;;
@@ -163,18 +164,24 @@ else
 than 1." && exit 1
 fi
 
-if rm ${LOCKFILE} ; then
-  # Erase the lockfile
-  echo "${LOCKFILE} has been erased."
-else
-  echo "Unable to erase the ${LOCKFILE}." && exit 1
+# If the "clean up" flag has been set, erase the lockfile
+if [ "$CLEAN_UP" -eq 1 ] ; then
+  if rm ${LOCKFILE} ; then
+    # Erase the lockfile
+    echo "${LOCKFILE} has been erased."
+  else
+    echo "Unable to erase the ${LOCKFILE}." && exit 1
+  fi
 fi
 
-if rm ${IMAGE_PARTS_PATH}/*.png ; then
-  # Erase the image parts
-  echo "Image parts have been erased."
-else
-  echo "Unable to erase the image parts." && exit 1
+# If the "clean up" flag has been set, erase the image parts
+if [ "$CLEAN_UP" -eq 1 ] ; then
+  if rm ${IMAGE_PARTS_PATH}/*.png ; then
+    # Erase the image parts
+    echo "Image parts have been erased."
+  else
+    echo "Unable to erase the image parts." && exit 1
+  fi
 fi
 
 # End of the 1st sequential part
