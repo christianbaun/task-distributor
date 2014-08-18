@@ -10,8 +10,8 @@
 # author:       Dr. Christian Baun --- http://www.christianbaun.de
 # url:          https://code.google.com/p/task-distributor/
 # license:      GPLv2
-# date:         August 17th 2014
-# version:      1.2
+# date:         August 18th 2014
+# version:      1.2.1
 # bash_version: 4.2.37(1)-release
 # requires:     bc 1.06.95
 # notes: 
@@ -43,21 +43,23 @@ do
     ls ${RAW_DATA_PATH}/${X}x${Y}_${N}_Nodes_*.txt > /dev/null 2>&1
     # "$?" contains the return code of the last command executed.
     if [ "$?" = "0" ] ; then
-      echo -e "Resolution: ${X}x${Y}\nNodes: ${N}"
+      echo "Resolution:                     ${X}x${Y}"
+      echo "Nodes:                          ${N}"
+      echo "Number of raw data files fount: `ls -l ${RAW_DATA_PATH}/${X}x${Y}_${N}_Nodes_*.txt | wc -l`"
       SEQ1=`tail --lines=3 ${RAW_DATA_PATH}/${X}x${Y}_${N}_Nodes_*.txt | grep 1st | awk '{ SUM += $9} END { print SUM/NR }'`
-      echo "Duration 1st sequential part: ${SEQ1} s"
+      echo "Duration 1st sequential part:   ${SEQ1} s"
       SEQ2=`tail --lines=3 ${RAW_DATA_PATH}/${X}x${Y}_${N}_Nodes_*.txt | grep 2nd | awk '{ SUM += $9} END { print SUM/NR }'`
-      echo "Duration 2nd sequential part: ${SEQ2} s"
+      echo "Duration 2nd sequential part:   ${SEQ2} s"
       PAR=`tail --lines=3 ${RAW_DATA_PATH}/${X}x${Y}_${N}_Nodes_*.txt | grep parallel | awk '{ SUM += $8} END { print SUM/NR }'`
-      echo "Duration parallel Part:       ${PAR} s"
+      echo "Duration parallel Part:         ${PAR} s"
       SUM=`echo "${SEQ1} + ${SEQ2} + ${PAR}" | bc`    
-      echo "Entire duration (sum):        ${SUM} s"
+      echo "Entire duration (sum):          ${SUM} s"
       PARPOR=`echo "scale = 4 ; (${PAR} / ${SUM})/1" | bc`
       PARPORFINAL=`echo "scale = 2 ; (${PARPOR} * 100)/1" | bc`
-      echo "Parallel portion:             ${PARPORFINAL} %"
+      echo "Parallel portion:               ${PARPORFINAL} %"
       # The sed command ensures that results < 1 have a leading 0 before the "."
       SEQPOR=`echo "scale = 2 ; ((1 - ${PARPOR}) * 100)/1" | bc | sed 's/^\./0./'`
-      echo "Sequential portion:           ${SEQPOR} %"  
+      echo "Sequential portion:             ${SEQPOR} %"  
 
       echo "${X} ${Y} ${N} ${SEQ1} ${SEQ2} ${PAR} ${SUM} ${PARPORFINAL} ${SEQPOR}" >> results.csv
 
