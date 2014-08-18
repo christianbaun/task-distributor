@@ -14,8 +14,7 @@
 
 RAW_DATA_PATH="Measurements_Raspberry_Pi_800MHz_POV-Ray" 
 
-#for x in 800 1600 3200 6400
-for x in 6400
+for x in 800 1600 3200 6400
 do
   if [ $x -eq 800 ]  ; then y=600  ; fi
   if [ $x -eq 1600 ] ; then y=1200 ; fi  
