@@ -5,14 +5,19 @@
 # author:       Dr. Christian Baun --- http://www.christianbaun.de
 # url:          https://code.google.com/p/task-distributor/
 # license:      GPLv2
-# date:         August 17th 2014
-# version:      1.2
+# date:         August 24th 2014
+# version:      1.3
 # bash_version: 4.2.37(1)-release
 # requires:     
 # notes: 
 # ----------------------------------------------------------------------------
 
 RAW_DATA_PATH="Measurements_Raspberry_Pi_800MHz_POV-Ray" 
+
+# Check if the directory for the results does not already exist  
+if [ ! -d ${RAW_DATA_PATH} ]; then  
+  mkdir ${RAW_DATA_PATH}                
+fi
 
 for x in 800 1600 3200 6400
 do

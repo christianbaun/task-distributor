@@ -7,8 +7,8 @@
 # author:       Dr. Christian Baun --- http://www.christianbaun.de
 # url:          https://code.google.com/p/task-distributor/
 # license:      GPLv2
-# date:         August 12th 2014
-# version:      1.1
+# date:         August 17th 2014
+# version:      1.2
 # bash_version: 4.2.37(1)-release
 # requires:     POV-Ray 3.7, ImageMagick 6.7.7, bc 1.06.95
 # notes: 

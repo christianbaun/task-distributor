@@ -7,8 +7,8 @@
 # author:       Dr. Christian Baun --- http://www.christianbaun.de
 # url:          https://code.google.com/p/task-distributor/
 # license:      GPLv2
-# date:         August 17th 2014
-# version:      1.2
+# date:         August 24th 2014
+# version:      1.3
 # bash_version: 4.2.37(1)-release
 # requires:     POV-Ray 3.7, ImageMagick 6.7.7, bc 1.06.95
 # notes: 
@@ -47,6 +47,7 @@ CLEAN_UP=0
 # Path of the remote script which executes POV-Ray on the nodes
 REMOTE_SCRIPT='/home/pi/task-distributor-worker.sh'
 
+USERNAME_SSH=pi
 IMG_PATH=/opt/povray/share/povray-3.7/scenes/objects/
 IMG_FILE=blob.pov
 OUTPUT_DIR=/tmp/
@@ -109,7 +110,7 @@ PARALLEL_TIME_START=`date +%s.%N`
 
 for ((i=1; i<=${NUM_NODES}; i+=1))
 do
-  ssh pi@${HOSTS_ARRAY[$i]} ${REMOTE_SCRIPT} ${NUM_NODES} ${IMG_PATH} ${IMG_FILE} +FN +W${IMG_WIDTH} +H${IMG_HEIGHT} +O${OUTPUT_DIR} +SR${START} +ER${END} &
+  ssh ${USERNAME_SSH}@${HOSTS_ARRAY[$i]} ${REMOTE_SCRIPT} ${NUM_NODES} ${IMG_PATH} ${IMG_FILE} +FN +W${IMG_WIDTH} +H${IMG_HEIGHT} +O${OUTPUT_DIR} +SR${START} +ER${END} &
   START=`expr ${START} + ${IMG_HEIGHT} / ${NUM_NODES}`
   END=`expr ${END} + ${IMG_HEIGHT} / ${NUM_NODES}`
 done
@@ -144,7 +145,7 @@ SEQUENTIAL_TIME2_START=`date +%s.%N`
 if [ "$NUM_NODES" -eq 1 ] ; then
   # Only a single node was be used => no image parts need to be composed.
   # Just copy the final image.
-  if cp /glusterfs/povray/pi*.png /tmp/test.png ; then
+  if cp /glusterfs/povray/*pi*.png /tmp/test.png ; then
     echo "Image has been copied."
   else
     echo "Unable to copy the image." && exit 1
@@ -153,7 +154,7 @@ if [ "$NUM_NODES" -eq 1 ] ; then
 elif [ "$NUM_NODES" -gt 1 ] ; then
   # More than a single node was used 
   # Compose image parts to create the final image
-  if convert -set colorspace RGB `ls /glusterfs/povray/pi*.png` -append /tmp/test.png ; then
+  if convert -set colorspace RGB `ls /glusterfs/povray/*pi*.png` -append /tmp/test.png ; then
     echo "Image parts have been composed."
   else
     echo "Unable to compose the image parts." && exit 1
