@@ -7,12 +7,24 @@
 # author:       Dr. Christian Baun --- http://www.christianbaun.de
 # url:          https://code.google.com/p/task-distributor/
 # license:      GPLv2
-# date:         August 24th 2014
-# version:      1.3
+# date:         August 25th 2014
+# version:      1.4
 # bash_version: 4.2.37(1)-release
 # requires:     POV-Ray 3.7, ImageMagick 6.7.7, bc 1.06.95
 # notes: 
 # ----------------------------------------------------------------------------
+
+# Check if bc is available
+bc --version > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo "Task-Distributor requires the command line tool bc!"; exit 1
+fi
+
+# Check if convert from ImageMagic is available
+convert -version > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo "Task-Distributor requires the command line tool convert from ImageMagic!"; exit 1
+fi
 
 # Start of the 1st sequential part
 SEQUENTIAL_TIME1_START=`date +%s.%N`
