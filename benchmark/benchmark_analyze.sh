@@ -10,15 +10,15 @@
 # author:       Dr. Christian Baun --- http://www.christianbaun.de
 # url:          https://code.google.com/p/task-distributor/
 # license:      GPLv2
-# date:         August 18th 2014
-# version:      1.2.1
+# date:         April 6th 2015
+# version:      1.3
 # bash_version: 4.2.37(1)-release
 # requires:     bc 1.06.95
 # notes: 
 # ----------------------------------------------------------------------------
 
 RAW_DATA_PATH="Measurements_Raspberry_Pi_800MHz_POV-Ray"
-RESULTS_FILE="results.csv"
+RESULTS_FILE="results2015.csv"
 
 # If a CSV file with the results already exists => erase it
 if [ -e ${RESULTS_FILE} ] ; then
@@ -28,12 +28,16 @@ fi
 # Print out the headline of the CSV file
 echo "X-Resolution Y-Resolution Nodes DurSeqPart1 DurSeqPart2 DurParPart EntireDurSum ParPort SeqPort" >> "${RESULTS_FILE}"
 
-for X in 800 1600 3200 6400
+for X in 800 1024 1280 1600 3200 4800 6400 9600
 do
   if [ $X -eq 800 ]  ; then Y=600  ; fi
+  if [ $X -eq 1024 ] ; then Y=768  ; fi
+  if [ $X -eq 1280 ] ; then Y=960  ; fi
   if [ $X -eq 1600 ] ; then Y=1200 ; fi
   if [ $X -eq 3200 ] ; then Y=2400 ; fi
+  if [ $X -eq 4800 ] ; then Y=3600 ; fi
   if [ $X -eq 6400 ] ; then Y=4800 ; fi
+  if [ $X -eq 9600 ] ; then Y=7200 ; fi
   for N in 1 2 4 8
   do
     # It is important here to not check the existence of files via
