@@ -65,7 +65,7 @@ do
       SEQPOR=`echo "scale = 2 ; ((1 - ${PARPOR}) * 100)/1" | bc | sed 's/^\./0./'`
       echo "Sequential portion:             ${SEQPOR} %"  
 
-      echo "${X} ${Y} ${N} ${SEQ1} ${SEQ2} ${PAR} ${SUM} ${PARPORFINAL} ${SEQPOR}" >> results.csv
+      echo "${X} ${Y} ${N} ${SEQ1} ${SEQ2} ${PAR} ${SUM} ${PARPORFINAL} ${SEQPOR}" >> ${RESULTS_FILE}
 
       # This is just an empty line at the end of each block.
       echo ""
