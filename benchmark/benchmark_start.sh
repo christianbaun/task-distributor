@@ -5,8 +5,8 @@
 # author:       Dr. Christian Baun --- http://www.christianbaun.de
 # url:          https://code.google.com/p/task-distributor/
 # license:      GPLv2
-# date:         April 6th 2015
-# version:      1.4
+# date:         April 19th 2015
+# version:      1.5
 # bash_version: 4.2.37(1)-release
 # requires:     
 # notes: 
@@ -19,8 +19,18 @@ if [ ! -d ${RAW_DATA_PATH} ]; then
   mkdir ${RAW_DATA_PATH}                
 fi
 
-for x in 800 1024 1280 1600 3200 4800 6400 9600
+# Path of the lockfile on a file system, which can be accessed by all nodes
+LOCKFILE="/glusterfs/povray/lockfile"
+
+# Check if the lockfile already exists
+if [ -e ${LOCKFILE} ] ; then
+  # Terminate the script, in case the lockfile already exists
+  echo "File ${LOCKFILE} already exists!" && exit 1
+fi
+
+for x in 400 600 800 1024 1280 1600 3200 4800 6400 9600
 do
+  if [ $x -eq 400 ]  ; then y=300  ; fi
   if [ $x -eq 800 ]  ; then y=600  ; fi
   if [ $x -eq 1024 ] ; then y=768  ; fi
   if [ $x -eq 1280 ] ; then y=960  ; fi
@@ -29,7 +39,7 @@ do
   if [ $x -eq 4800 ] ; then y=3600 ; fi
   if [ $x -eq 6400 ] ; then y=4800 ; fi  
   if [ $x -eq 9600 ] ; then y=7200 ; fi
-  for i in 1 2 4 8
+ for i in 1 2 4 8
   do
     ./task-distributor-master.sh -n ${i} -x ${x} -y ${y} -p /glusterfs/povray -c > ${RAW_DATA_PATH}/${x}x${y}_${i}_Nodes_`date +%Y_%m_%d_%H:%M:%S`.txt 2>&1
     sleep 10
