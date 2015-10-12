@@ -132,7 +132,7 @@ for ((i=1; i<=${NUM_NODES}; i+=1))
 do
   while true
   do
-    if [ -f /glusterfs/povray/lockfile ] && grep ${HOSTS_ARRAY[$i]} /glusterfs/povray/lockfile ; then
+    if [ -f ${LOCKFILE} ] && grep ${HOSTS_ARRAY[$i]} /${LOCKFILE} ; then
       echo "${HOSTS_ARRAY[$i]} has been finished." && break
     else
       echo "Wait for ${HOSTS_ARRAY[$i]} in lockfile." 

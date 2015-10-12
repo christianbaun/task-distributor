@@ -7,8 +7,8 @@
 # author:       Dr. Christian Baun --- http://www.christianbaun.de
 # url:          https://code.google.com/p/task-distributor/
 # license:      GPLv2
-# date:         August 17th 2014
-# version:      1.2
+# date:         May 16th 2015
+# version:      1.2.1
 # bash_version: 4.2.37(1)-release
 # requires:     POV-Ray 3.7, ImageMagick 6.7.7, bc 1.06.95
 # notes: 
@@ -51,7 +51,7 @@ elif [ $1 -gt 1 ] ; then
   # number of rows as integer
   IMG_HEIGHT=`echo $6 | cut -c 3-`
   # Cut away the first 2 characters "+W" from parameter $5 to obtain the
-  # number of rows as integer
+  # number of columns as integer
   IMG_WIDTH=`echo $5 | cut -c 3-`
   # Calculate the number of rows, each worker node will calculate
   ROW_SIZE=`expr ${IMG_HEIGHT} / ${1}`
@@ -59,7 +59,11 @@ elif [ $1 -gt 1 ] ; then
   # Remove the black rows from the image part to reduce the network traffic 
   # and the amount of data which needs the master to process finally for 
   # creating the final image
-  convert -set colorspace RGB -define png:size=${IMG_WIDTH}x${IMG_HEIGHT} -extract ${IMG_WIDTH}x${ROW_SIZE}+0+${SIZE_RESULT} /tmp/`echo $3 | cut -f1 -d'.'`.png /tmp/`echo $3 | cut -f1 -d'.'`.png
+  #  convert -set colorspace RGB -define png:size=${IMG_WIDTH}x${IMG_HEIGHT} -extract ${IMG_WIDTH}x${ROW_SIZE}+0+${SIZE_RESULT} /tmp/`echo $3 | cut -f1 -d'.'`.png /tmp/`echo $3 | cut -f1 -d'.'`.png
+  # The +repage is very important. It is required to remove resize the page geometry!
+  convert -set colorspace RGB -extract ${IMG_WIDTH}x${ROW_SIZE}+0+${SIZE_RESULT} +repage /tmp/`echo $3 | cut -f1 -d'.'`.png /tmp/`echo $3 | cut -f1 -d'.'`.png
+  # Alternative: crop
+  # convert -set colorspace RGB -crop ${IMG_WIDTH}x${ROW_SIZE}+0+${SIZE_RESULT} +repage /tmp/`echo $3 | cut -f1 -d'.'`.png /tmp/`echo $3 | cut -f1 -d'.'`.png
   
 # if the number of nodes is not 1 and not > 1 than we have an error
 else
