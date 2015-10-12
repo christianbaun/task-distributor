@@ -5,10 +5,10 @@
 #               checks the progress and composes the image parts to create the
 #               desired image
 # author:       Dr. Christian Baun --- http://www.christianbaun.de
-# url:          https://code.google.com/p/task-distributor/
+# url:          https://github.com/christianbaun/task-distributor
 # license:      GPLv2
 # date:         October 12th 2014
-# version:      1.5
+# version:      1.6
 # bash_version: 4.2.37(1)-release
 # requires:     POV-Ray 3.7, ImageMagick 6.7.7, bc 1.06.95
 # notes: 
@@ -157,7 +157,7 @@ SEQUENTIAL_TIME2_START=`date +%s.%N`
 if [ "$NUM_NODES" -eq 1 ] ; then
   # Only a single node was be used => no image parts need to be composed.
   # Just copy the final image.
-  if cp ${IMAGE_PARTS_PATH}/*pi*.png /tmp/test.png ; then
+  if cp ${IMAGE_PARTS_PATH}/*pi*.png /tmp/output_${IMG_WIDTH}x${IMG_HEIGHT}_${NUM_NODES}_nodes_`date +%Y_%m_%d_%H:%M:%S`.png ; then
     echo "Image has been copied."
   else
     echo "Unable to copy the image." && exit 1
@@ -166,7 +166,7 @@ if [ "$NUM_NODES" -eq 1 ] ; then
 elif [ "$NUM_NODES" -gt 1 ] ; then
   # More than a single node was used 
   # Compose image parts to create the final image
-  if convert -set colorspace RGB `ls ${IMAGE_PARTS_PATH}/*pi*.png` -append /tmp/test.png ; then
+  if convert -set colorspace RGB `ls ${IMAGE_PARTS_PATH}/*pi*.png` -append /tmp/output_${IMG_WIDTH}x${IMG_HEIGHT}_${NUM_NODES}_nodes_`date +%Y_%m_%d_%H:%M:%S`.png ; then
     echo "Image parts have been composed."
   else
     echo "Unable to compose the image parts." && exit 1
