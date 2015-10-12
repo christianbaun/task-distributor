@@ -7,8 +7,8 @@
 # author:       Dr. Christian Baun --- http://www.christianbaun.de
 # url:          https://code.google.com/p/task-distributor/
 # license:      GPLv2
-# date:         August 25th 2014
-# version:      1.4
+# date:         October 12th 2014
+# version:      1.5
 # bash_version: 4.2.37(1)-release
 # requires:     POV-Ray 3.7, ImageMagick 6.7.7, bc 1.06.95
 # notes: 
@@ -64,7 +64,7 @@ IMG_PATH=/opt/povray/share/povray-3.7/scenes/objects/
 IMG_FILE=blob.pov
 OUTPUT_DIR=/tmp/
 # Array with the hostnames (the first entry has index number 1 here)
-HOSTS_ARRAY=([1]=pi31 pi32 pi33 pi34 pi35 pi36 pi37 pi38)
+HOSTS_ARRAY=([1]=pi110 pi111 pi112 pi113 pi114 pi115 pi116 pi117)
 
 while getopts "hn:x:y:fcp:" Arg ; do
   case $Arg in
@@ -122,7 +122,7 @@ PARALLEL_TIME_START=`date +%s.%N`
 
 for ((i=1; i<=${NUM_NODES}; i+=1))
 do
-  ssh ${USERNAME_SSH}@${HOSTS_ARRAY[$i]} ${REMOTE_SCRIPT} ${NUM_NODES} ${IMG_PATH} ${IMG_FILE} +FN +W${IMG_WIDTH} +H${IMG_HEIGHT} +O${OUTPUT_DIR} +SR${START} +ER${END} &
+  ssh ${USERNAME_SSH}@${HOSTS_ARRAY[$i]} ${REMOTE_SCRIPT} ${NUM_NODES} ${IMG_PATH} ${IMG_FILE} +FN +W${IMG_WIDTH} +H${IMG_HEIGHT} +O${OUTPUT_DIR} +SR${START} +ER${END} ${IMAGE_PARTS_PATH} ${LOCKFILE} &
   START=`expr ${START} + ${IMG_HEIGHT} / ${NUM_NODES}`
   END=`expr ${END} + ${IMG_HEIGHT} / ${NUM_NODES}`
 done
@@ -157,7 +157,7 @@ SEQUENTIAL_TIME2_START=`date +%s.%N`
 if [ "$NUM_NODES" -eq 1 ] ; then
   # Only a single node was be used => no image parts need to be composed.
   # Just copy the final image.
-  if cp /glusterfs/povray/*pi*.png /tmp/test.png ; then
+  if cp ${IMAGE_PARTS_PATH}/*pi*.png /tmp/test.png ; then
     echo "Image has been copied."
   else
     echo "Unable to copy the image." && exit 1
@@ -166,7 +166,7 @@ if [ "$NUM_NODES" -eq 1 ] ; then
 elif [ "$NUM_NODES" -gt 1 ] ; then
   # More than a single node was used 
   # Compose image parts to create the final image
-  if convert -set colorspace RGB `ls /glusterfs/povray/*pi*.png` -append /tmp/test.png ; then
+  if convert -set colorspace RGB `ls ${IMAGE_PARTS_PATH}/*pi*.png` -append /tmp/test.png ; then
     echo "Image parts have been composed."
   else
     echo "Unable to compose the image parts." && exit 1

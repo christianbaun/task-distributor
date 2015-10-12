@@ -12,7 +12,7 @@
 # notes: 
 # ----------------------------------------------------------------------------
 
-RAW_DATA_PATH="Measurements_Raspberry_Pi_800MHz_POV-Ray" 
+RAW_DATA_PATH="Measurements_Raspberry_Pi2_900MHz_POV-Ray_2015" 
 
 # Check if the directory for the results does not already exist  
 if [ ! -d ${RAW_DATA_PATH} ]; then  
@@ -21,7 +21,7 @@ fi
 
 # Path of the folder (on a distributed file system) where the workers 
 # store the povray files
-PATH_FS="/glusterfs8repl/povray"
+PATH_FS="/glusterfs8repl/povray" 
 
 # Path of the lockfile on a file system, which can be accessed by all nodes
 LOCKFILE="/glusterfs8repl/povray/lockfile"
@@ -32,7 +32,7 @@ if [ -e ${LOCKFILE} ] ; then
   echo "File ${LOCKFILE} already exists!" && exit 1
 fi
 
-for x in 400 600 800 1024 1280 1600 3200 4800 6400 9600
+for x in 600 800 1024 1280 1600 3200 4800 6400 9600
 do
   if [ $x -eq 400 ]  ; then y=300  ; fi
   if [ $x -eq 800 ]  ; then y=600  ; fi
@@ -43,7 +43,7 @@ do
   if [ $x -eq 4800 ] ; then y=3600 ; fi
   if [ $x -eq 6400 ] ; then y=4800 ; fi  
   if [ $x -eq 9600 ] ; then y=7200 ; fi
- for i in 1 2 4 8
+for i in 1 2 4 8
   do
     ./task-distributor-master.sh -n ${i} -x ${x} -y ${y} -p ${PATH_FS} -c > ${RAW_DATA_PATH}/${x}x${y}_${i}_Nodes_`date +%Y_%m_%d_%H:%M:%S`.txt 2>&1
     sleep 10
