@@ -60,7 +60,39 @@ inform the master node that the image part of this worker node is now available.
 
 ## Workflow
 
-![Task-Distributor 1/4](christianbaun.github.com/task-distributor/blob/master/wiki/images/Task_Distributor_Workflow_part1.png)
+![Task-Distributor 1/4](wiki/images/Task_Distributor_Workflow_part1.png)
+
+![Task-Distributor 2/4](wiki/images/Task_Distributor_Workflow_part2.png)
+
+![Task-Distributor 3/4](wiki/images/Task_Distributor_Workflow_part3.png)
+
+![Task-Distributor 4/4](wiki/images/Task_Distributor_Workflow_part4.png)
+
+## Reason for the Development and the Design Decisions
+
+Several options exist when POV-Ray needs to be used in compute cluster. Some projects like MPIPOV or the PVM patch for POV-Ray extended the functionality of POV-Ray in a way that it was possible to use the Message Passing Interface (MPI) or the Parallel Virtual Machine (PVM) for splitting the image computation task into smaller subtasks and distributing them to the nodes of a cluster.
+
+The popular solutions from the 90s are now all broken, because have not been updated since more than 10 years and they do not support recent POV-Ray revisions. This is a major drawback because starting with version 3.7, POV-Ray provides multithreading.
+For this reason, I implemented te Task-Distributor, which follows the approach, well described by W.R.Rooney here Povray on a Cluster. This approach just splits the image calculation by row. No modification of the POV-Ray source code is required and the implementation is very simple to understand, install and use.
+
+With POV-Ray it is possible to let each node calculate just a part of the final image by using the options +sr and +er. The behavior of POV-Ray 3.6 and older is well explained here POV-Ray 3.6 Documentation:
+
+* *When rendering a subset of rows (+sr/+er) POV-Ray writes the full height into the image file header and only writed those lines into the image that are rendered. This can cause problems with image reading programs that are not checking the file while reading and just read over the end.* *
+
+A common approach was using PPM as output format and concatenating the resulting parts to the final image by building a PPM file header and assemblng the image parts via the command line too `cat` to the final image.
+
+POV-Ray 3.7 works in a modified way as described here POV-Ray 3.7 Documentation:
+
+* *When rendering a subset of columns (+sc/+ec) and/or rows (+sr/+er), POV-Ray generates a full width image and fills the not rendered columns with black pixels. This should not be a problem for any image reading program no matter what file format is used. Earlier versions of POV-Ray had problems when a subset of rows (+sr/+er) was rendered. The full height information was written into the image file header but it only wrote image data for those lines that were actually rendered. This made output files that were incompatible with various image processing tools. In version 3.7 this is no longer the case.* *
+
+Two options were evaluated during the developlement of the Task-Distributor:
+
+1. Combining the images with each other by using the command line tool `composite` from the ImageMagick project. With `composite -compose lighten imput1.png imput2.png output.png` the pixels of the input images are compared and the lighter values are taken for the output image. This approach causes a lot computation effort on the master.
+2. Using the command line tool `convert` from the ImageMagick project to remove the black rows from the image parts. Removing the black rows on worker node site reduces the compute time because this subtask is carried out in parallel. The fact that the master needs lesser data to process, when it composes (also with the command line tool `convert`) the final image from the image parts, also reduces the compute time.
+
+Task-Distributor implements approach number 2.
+
+The amount of data, which needs to be processed by the master and transmitted in the network is reduced by using the output format PNG instead of PPN, because PNG files are smaller in size. Using the output format PNG is possible because the `convert` tool supports this file format PNG.
 
 ## Example
 
