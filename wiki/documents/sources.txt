@@ -1,4 +1,4 @@
-wget http://www.ce.unipr.it/people/bertozzi/pap/cr/fava.ps.gz
+http://www.ce.unipr.it/people/bertozzi/pap/cr/fava.ps.gz
 http://www.few.vu.nl/~kielmann/papers/hicss97-sched.pdf
 http://www.csc.kth.se/~smakadir/parallel-ray-tracing.pdf
 http://www.csc.kth.se/~smakadir/parallel-ray-tracing-dynamic-loadbalancing.pdf
