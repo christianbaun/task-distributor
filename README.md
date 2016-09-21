@@ -24,8 +24,10 @@ worker nodes must exist, because this shared folder is required to store the
 lockfile and the image parts. The shared folder can be implemented via a 
 distributed file system or a protocol (e.g. NFS) 
 
-task-distributor-master.sh
---------------------------
+The two shell scripts are in detail:
+
+### task-distributor-master.sh
+
 This script creates a lockfile on a shared folder, which can be accessed by the 
 master node and all worker nodes.
 
@@ -36,8 +38,8 @@ if each worker node has placed its hostname into the lockfile. If this
 condition is met, the script composes the image parts via the command line tool 
 convert from the ImageMagick project to create the final image.
 
-task-distributor-worker.sh
---------------------------
+### task-distributor-worker.sh
+
 This script must be located on each worker node because it executes the POV-ray 
 render job according to the instructions of the master node and stores the 
 resulting image part on a shared folder, which can be accessed by the master 
@@ -54,18 +56,18 @@ needs the master to process finally for creating the final image.
 Finally, the script writes the hostname of the worker node into the lockfile to 
 inform the master node that the image part of this worker node is now available.
 
-EXAMPLE
--------
-./task-distributor-master.sh -n 8 -x 800 -y 600 -p /glusterfs/povray
+## EXAMPLE
 
-WEB SITE
---------
+`./task-distributor-master.sh -n 8 -x 800 -y 600 -p /glusterfs/povray`
+
+## WEB SITE
+
 Visit the Task-Distributor for more information and the latest revision.
 
-http://code.google.com/p/task-distributor
+[https://github.com/christianbaun/task-distributor](https://github.com/christianbaun/task-distributor)
 
-LICENSE
--------
+## LICENSE
+
 GPLv2 or later.
 
-http://www.gnu.org/licenses/gpl-2.0.html
+[http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
