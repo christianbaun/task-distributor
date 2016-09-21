@@ -1,4 +1,4 @@
-# TASK-DISTRIBUTOR
+# Task-Distributor - A Task Distributor for Clusters
 
 
 Task-Distributor is a collection of two bash scripts, which simplify the 
@@ -6,11 +6,11 @@ parallel generation of images by using the ray tracing software POV-Ray by using
 multiple worker nodes in parallel. POV-Ray supports to calculate just a part of 
 the final image (a limited number of rows). 
 
-## SYNOPSIS
+## Synopsis
 
 task-distributor-master.sh -n nodes -x width -y height -p path
 
-## REQUIREMENTS
+## Requirements
 
 These software packages must be installed on all worker nodes:
 
@@ -23,6 +23,8 @@ A shared folder, which can be accessed by the master node and all
 worker nodes must exist, because this shared folder is required to store the 
 lockfile and the image parts. The shared folder can be implemented via a 
 distributed file system or a protocol (e.g. NFS) 
+
+## Components 
 
 The two shell scripts are in detail:
 
@@ -45,7 +47,7 @@ render job according to the instructions of the master node and stores the
 resulting image part on a shared folder, which can be accessed by the master 
 node and all worker nodes.
 
-It is possible with POV-Ray to render only a subset of *rows* but since POV-Ray 
+It is possible with POV-Ray to render only a subset of **rows** but since POV-Ray 
 3.7 the output is always a full height image and not rendered rows are filled 
 with black pixels. 
 
@@ -56,17 +58,21 @@ needs the master to process finally for creating the final image.
 Finally, the script writes the hostname of the worker node into the lockfile to 
 inform the master node that the image part of this worker node is now available.
 
-## EXAMPLE
+## Workflow
+
+![Task-Distributor 1/4](christianbaun.github.com/task-distributor/blob/master/wiki/images/Task_Distributor_Workflow_part1.png)
+
+## Example
 
 `./task-distributor-master.sh -n 8 -x 800 -y 600 -p /glusterfs/povray`
 
-## WEB SITE
+## Web Site
 
 Visit the Task-Distributor for more information and the latest revision.
 
 [https://github.com/christianbaun/task-distributor](https://github.com/christianbaun/task-distributor)
 
-## LICENSE
+## License
 
 GPLv2 or later.
 
