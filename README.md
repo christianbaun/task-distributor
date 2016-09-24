@@ -107,6 +107,7 @@ The amount of data, which needs to be processed by the master and transmitted in
 - [Parallel Raytracing: A Case Study on Partitioning and Scheduling on Workstation Clusters](wiki/documents/hicss97-sched.pdf). *Bernd Freisleben, Dieter Hartmann, Thilo Kielmann*. 1997 ([source](http://www.few.vu.nl/~kielmann/papers/hicss97-sched.pdf))
 - [Parallel Ray Tracing using MPI and OpenMP](wiki/documents/parallel-ray-tracing.pdf). *Ashraful Kadir, Tazrian Khan* ([source](http://www.csc.kth.se/~smakadir/parallel-ray-tracing.pdf))
 - [Parallel Ray Tracing using MPI: A Dynamic Load-balancing Approach](wiki/documents/parallel-ray-tracing-dynamic-loadbalancing.pdf). *Ashraful Kadir, Tazrian Khan* ([source](http://www.csc.kth.se/~smakadir/parallel-ray-tracing-dynamic-loadbalancing.pdf))
+- [A Linux PC Cluster with Diskless Slave Nodes for Parallel Computing](wiki/documents/CTHPC2003-12.pdf). *Chao-Tung Yang, Yao-Chung Chang*. 2003 ([source](http://parallel.iis.sinica.edu.tw/cthpc2003/papers/CTHPC2003-12.pdf))
 
 ## Web Site
 
