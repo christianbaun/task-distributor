@@ -6,9 +6,11 @@ parallel generation of images by using the ray tracing software POV-Ray by using
 multiple worker nodes in parallel. POV-Ray supports to calculate just a part of 
 the final image (a limited number of rows). 
 
+A lot of information about Task-Distributor provides the paper [Parallel image computation in clusters with task-distributor](wiki/documents/Parallel_image_computation_in_clusters_with_task_distributor_SpringerPlus_2016.pdf). *Christian Baun*. SpringerPlus 2016 5:632 ([source](http://springerplus.springeropen.com/articles/10.1186/s40064-016-2254-x))
+
 ## Synopsis
 
-task-distributor-master.sh -n nodes -x width -y height -p path
+`task-distributor-master.sh -n nodes -x width -y height -p path`
 
 ## Requirements
 
@@ -101,10 +103,10 @@ The amount of data, which needs to be processed by the master and transmitted in
 
 ## Interesting Sources about parallel Ray Tracing
 
--  [MPIPOV: a Parallel Implementation of POV-Ray Based on MPI](wiki/documents/fava.pdf). Alessandro Fava, Emanuele Fava, Massimo Bertozzi. 1999 ([source](http://www.ce.unipr.it/people/bertozzi/pap/cr/fava.ps.gz))
-- [Parallel Raytracing: A Case Study on Partitioning and Scheduling on Workstation Clusters](wiki/documents/hicss97-sched.pdf). Bernd Freisleben, Dieter Hartmann, Thilo Kielmann. 1997 ([source](http://www.few.vu.nl/~kielmann/papers/hicss97-sched.pdf))
-- [Parallel Ray Tracing using MPI and OpenMP](wiki/documents/parallel-ray-tracing.pdf). Ashraful Kadir, Tazrian Khan ([source](http://www.csc.kth.se/~smakadir/parallel-ray-tracing.pdf))
-- [Parallel Ray Tracing using MPI: A Dynamic Load-balancing Approach](wiki/documents/parallel-ray-tracing-dynamic-loadbalancing.pdf). Ashraful Kadir, Tazrian Khan ([source](http://www.csc.kth.se/~smakadir/parallel-ray-tracing-dynamic-loadbalancing.pdf))
+-  [MPIPOV: a Parallel Implementation of POV-Ray Based on MPI](wiki/documents/fava.pdf). *Alessandro Fava, Emanuele Fava, Massimo Bertozzi*. 1999 ([source](http://www.ce.unipr.it/people/bertozzi/pap/cr/fava.ps.gz))
+- [Parallel Raytracing: A Case Study on Partitioning and Scheduling on Workstation Clusters](wiki/documents/hicss97-sched.pdf). *Bernd Freisleben, Dieter Hartmann, Thilo Kielmann*. 1997 ([source](http://www.few.vu.nl/~kielmann/papers/hicss97-sched.pdf))
+- [Parallel Ray Tracing using MPI and OpenMP](wiki/documents/parallel-ray-tracing.pdf). *Ashraful Kadir, Tazrian Khan* ([source](http://www.csc.kth.se/~smakadir/parallel-ray-tracing.pdf))
+- [Parallel Ray Tracing using MPI: A Dynamic Load-balancing Approach](wiki/documents/parallel-ray-tracing-dynamic-loadbalancing.pdf). *Ashraful Kadir, Tazrian Khan* ([source](http://www.csc.kth.se/~smakadir/parallel-ray-tracing-dynamic-loadbalancing.pdf))
 
 ## Web Site
 
