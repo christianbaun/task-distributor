@@ -49,7 +49,7 @@ render job according to the instructions of the master node and stores the
 resulting image part on a shared folder, which can be accessed by the master 
 node and all worker nodes.
 
-It is possible with POV-Ray to render only a subset of **rows** but since POV-Ray 
+It is possible with POV-Ray to render only a subset of rows but since POV-Ray 
 3.7 the output is always a full height image and not rendered rows are filled 
 with black pixels. 
 
