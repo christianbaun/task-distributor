@@ -62,13 +62,13 @@ inform the master node that the image part of this worker node is now available.
 
 ## Workflow
 
-![Task-Distributor 1/4](wiki/images/Task_Distributor_Workflow_part1.png)
+![Task-Distributor 1/4](documentation/images/Task_Distributor_Workflow_part1.png)
 
-![Task-Distributor 2/4](wiki/images/Task_Distributor_Workflow_part2.png)
+![Task-Distributor 2/4](documentation/images/Task_Distributor_Workflow_part2.png)
 
-![Task-Distributor 3/4](wiki/images/Task_Distributor_Workflow_part3.png)
+![Task-Distributor 3/4](documentation/images/Task_Distributor_Workflow_part3.png)
 
-![Task-Distributor 4/4](wiki/images/Task_Distributor_Workflow_part4.png)
+![Task-Distributor 4/4](documentation/images/Task_Distributor_Workflow_part4.png)
 
 ## Reason for the Development and the Design Decisions
 
@@ -103,11 +103,11 @@ The amount of data, which needs to be processed by the master and transmitted in
 
 ## Interesting Sources about parallel Ray Tracing
 
--  [MPIPOV: a Parallel Implementation of POV-Ray Based on MPI](wiki/documents/fava.pdf). *Alessandro Fava, Emanuele Fava, Massimo Bertozzi*. 1999 ([source](http://www.ce.unipr.it/people/bertozzi/pap/cr/fava.ps.gz))
-- [Parallel Raytracing: A Case Study on Partitioning and Scheduling on Workstation Clusters](wiki/documents/hicss97-sched.pdf). *Bernd Freisleben, Dieter Hartmann, Thilo Kielmann*. 1997 ([source](http://www.few.vu.nl/~kielmann/papers/hicss97-sched.pdf))
-- [Parallel Ray Tracing using MPI and OpenMP](wiki/documents/parallel-ray-tracing.pdf). *Ashraful Kadir, Tazrian Khan* ([source](http://www.csc.kth.se/~smakadir/parallel-ray-tracing.pdf))
-- [Parallel Ray Tracing using MPI: A Dynamic Load-balancing Approach](wiki/documents/parallel-ray-tracing-dynamic-loadbalancing.pdf). *Ashraful Kadir, Tazrian Khan* ([source](http://www.csc.kth.se/~smakadir/parallel-ray-tracing-dynamic-loadbalancing.pdf))
-- [A Linux PC Cluster with Diskless Slave Nodes for Parallel Computing](wiki/documents/CTHPC2003-12.pdf). *Chao-Tung Yang, Yao-Chung Chang*. 2003 ([source](http://parallel.iis.sinica.edu.tw/cthpc2003/papers/CTHPC2003-12.pdf))
+-  [MPIPOV: a Parallel Implementation of POV-Ray Based on MPI](documentation/literature/fava.pdf). *Alessandro Fava, Emanuele Fava, Massimo Bertozzi*. 1999 ([source](http://www.ce.unipr.it/people/bertozzi/pap/cr/fava.ps.gz))
+- [Parallel Raytracing: A Case Study on Partitioning and Scheduling on Workstation Clusters](documentation/literature/hicss97-sched.pdf). *Bernd Freisleben, Dieter Hartmann, Thilo Kielmann*. 1997 ([source](http://www.few.vu.nl/~kielmann/papers/hicss97-sched.pdf))
+- [Parallel Ray Tracing using MPI and OpenMP](documentation/literature/parallel-ray-tracing.pdf). *Ashraful Kadir, Tazrian Khan* ([source](http://www.csc.kth.se/~smakadir/parallel-ray-tracing.pdf))
+- [Parallel Ray Tracing using MPI: A Dynamic Load-balancing Approach](documentation/literature/parallel-ray-tracing-dynamic-loadbalancing.pdf). *Ashraful Kadir, Tazrian Khan* ([source](http://www.csc.kth.se/~smakadir/parallel-ray-tracing-dynamic-loadbalancing.pdf))
+- [A Linux PC Cluster with Diskless Slave Nodes for Parallel Computing](documentation/literature/CTHPC2003-12.pdf). *Chao-Tung Yang, Yao-Chung Chang*. 2003 ([source](http://parallel.iis.sinica.edu.tw/cthpc2003/papers/CTHPC2003-12.pdf))
 
 ## Web Site
 
