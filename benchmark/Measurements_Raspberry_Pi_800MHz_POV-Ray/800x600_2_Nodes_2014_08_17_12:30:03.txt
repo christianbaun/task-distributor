@@ -1,0 +1,30 @@
+/glusterfs/povray/lockfile has been created.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+Wait for pi31 in lockfile.
+pi31 2014_08_17_12:30:24
+pi31 has been finished.
+pi32 2014_08_17_12:30:22
+pi32 has been finished.
+Image parts have been composed.
+/glusterfs/povray/lockfile has been erased.
+Image parts have been erased.
+Required time to process the 1st sequential part:    0.205s
+Required time to process the parallel part:          21.298s
+Required time to process the 2nd sequential part:    1.561s

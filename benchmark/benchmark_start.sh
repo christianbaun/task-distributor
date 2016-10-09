@@ -3,10 +3,10 @@
 # title:        benchmark_start.sh
 # description:  This script starts the benchmark runs of Task-Distributor.
 # author:       Dr. Christian Baun --- http://www.christianbaun.de
-# url:          https://code.google.com/p/task-distributor/
+# url:          https://github.com/christianbaun/task-distributor/wiki
 # license:      GPLv2
-# date:         Oktober 12th 2015
-# version:      1.6
+# date:         October 9th 2016
+# version:      1.6.1
 # bash_version: 4.2.37(1)-release
 # requires:     
 # notes: 

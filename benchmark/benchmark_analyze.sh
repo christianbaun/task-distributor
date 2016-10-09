@@ -8,17 +8,17 @@
 #               file results.csv too which contains the results for further
 #               analyzing with gnuplot or any other tool.
 # author:       Dr. Christian Baun --- http://www.christianbaun.de
-# url:          https://code.google.com/p/task-distributor/
+# url:          https://github.com/christianbaun/task-distributor
 # license:      GPLv2
-# date:         May 2nd 2015
-# version:      1.4
+# date:         October 9th 2016
+# version:      1.4.1
 # bash_version: 4.2.37(1)-release
 # requires:     bc 1.06.95
 # notes: 
 # ----------------------------------------------------------------------------
 
 RAW_DATA_PATH="Measurements_Raspberry_Pi_800MHz_POV-Ray"
-RESULTS_FILE="results2015_V2.csv"
+RESULTS_FILE="results2015_V3.csv"
 
 # If a CSV file with the results already exists => erase it
 if [ -e ${RESULTS_FILE} ] ; then
