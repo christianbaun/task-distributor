@@ -70,7 +70,7 @@ inform the master node that the image part of this worker node is now available.
 
 ![Task-Distributor 4/4](documentation/images/Task_Distributor_Workflow_part4.png)
 
-## Reason for the Development and the Design Decisions
+## Reason for the Development and Design Decisions
 
 Several options exist when POV-Ray needs to be used in compute cluster. Some projects like [MPIPOV](http://www.ce.unipr.it/research/parma2/povray/povray.html) or the [PVM patch for POV-Ray](http://pvmpov.sourceforge.net) extended the functionality of POV-Ray in a way that it was possible to use the [Message Passing Interface](http://www.mcs.anl.gov/research/projects/mpi/) (MPI) or the [Parallel Virtual Machine](http://www.csm.ornl.gov/pvm/pvm_home.html) (PVM) for splitting the image computation task into smaller subtasks and distributing them to the nodes of a cluster.
 
