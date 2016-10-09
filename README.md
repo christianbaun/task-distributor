@@ -113,9 +113,11 @@ The amount of data, which needs to be processed by the master and transmitted in
 
 ## Web Site
 
-Visit the Task-Distributor for more information and the latest revision.
+Visit the Task-Distributor web page for more information and the latest revision.
 
 [https://github.com/christianbaun/task-distributor](https://github.com/christianbaun/task-distributor)
+
+Some further information provides the [Wiki](https://github.com/christianbaun/task-distributor/wiki)
 
 ## License
 
