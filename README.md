@@ -121,6 +121,5 @@ Some further information provides the [Wiki](https://github.com/christianbaun/ta
 
 ## License
 
-GPLv2 or later.
+[GPLv2](http://www.gnu.org/licenses/gpl-2.0.html) or later.
 
-[http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
