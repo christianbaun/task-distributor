@@ -48,7 +48,7 @@ Arguments:
 exit 0
 }
 
-SCRIPT=${0##*/}
+SCRIPT=${0##*/}   # script name
 IMG_WIDTH=
 IMG_HEIGHT=
 NUM_NODES=

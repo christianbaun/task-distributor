@@ -8,7 +8,7 @@ the final image (a limited number of rows).
 
 ## Publications
 
-- [**Parallel image computation in clusters with task-distributor**](http://springerplus.springeropen.com/articles/10.1186/s40064-016-2254-x). *Christian Baun*. SpringerPlus 2016 5:632 ([PDF](wiki/documents/Parallel_image_computation_in_clusters_with_task_distributor_SpringerPlus_2016.pdf))
+- [**Parallel image computation in clusters with task-distributor**](http://springerplus.springeropen.com/articles/10.1186/s40064-016-2254-x). *Christian Baun*. SpringerPlus 2016 5:632 ([PDF](https://github.com/christianbaun/task-distributor/raw/master/documentation/literature/Parallel_image_computation_in_clusters_with_task_distributor_SpringerPlus_2016.pdf))
 
 ## Synopsis
 
