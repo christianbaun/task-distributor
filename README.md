@@ -107,8 +107,8 @@ The amount of data, which needs to be processed by the master and transmitted in
 
 -  [MPIPOV: a Parallel Implementation of POV-Ray Based on MPI](documentation/literature/fava.pdf). *Alessandro Fava, Emanuele Fava, Massimo Bertozzi*. 1999 ([source](http://www.ce.unipr.it/people/bertozzi/pap/cr/fava.ps.gz))
 - [Parallel Raytracing: A Case Study on Partitioning and Scheduling on Workstation Clusters](documentation/literature/hicss97-sched.pdf). *Bernd Freisleben, Dieter Hartmann, Thilo Kielmann*. 1997 ([source](http://www.few.vu.nl/~kielmann/papers/hicss97-sched.pdf))
-- [Parallel Ray Tracing using MPI and OpenMP](documentation/literature/parallel-ray-tracing.pdf). *Ashraful Kadir, Tazrian Khan* ([source](http://www.csc.kth.se/~smakadir/parallel-ray-tracing.pdf))
-- [Parallel Ray Tracing using MPI: A Dynamic Load-balancing Approach](documentation/literature/parallel-ray-tracing-dynamic-loadbalancing.pdf). *Ashraful Kadir, Tazrian Khan* ([source](http://www.csc.kth.se/~smakadir/parallel-ray-tracing-dynamic-loadbalancing.pdf))
+- [Parallel Ray Tracing using MPI and OpenMP](documentation/literature/parallel-ray-tracing.pdf). *Ashraful Kadir, Tazrian Khan* 
+- [Parallel Ray Tracing using MPI: A Dynamic Load-balancing Approach](documentation/literature/parallel-ray-tracing-dynamic-loadbalancing.pdf). *Ashraful Kadir, Tazrian Khan*
 - [A Linux PC Cluster with Diskless Slave Nodes for Parallel Computing](documentation/literature/CTHPC2003-12.pdf). *Chao-Tung Yang, Yao-Chung Chang*. 2003 ([source](http://parallel.iis.sinica.edu.tw/cthpc2003/papers/CTHPC2003-12.pdf))
 
 ## Web Site
