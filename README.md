@@ -1,5 +1,7 @@
-# Task-Distributor - A Task Distributor for Clusters
+[![GPL license](https://img.shields.io/badge/License-GPL-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
+[![made-with-bash](https://img.shields.io/badge/-Made%20with%20Bash-1f425f.svg)](https://www.gnu.org/software/bash/)
 
+# Task-Distributor - A Task Distributor for Clusters
 
 Task-Distributor is a collection of two bash scripts, which simplify the 
 parallel generation of images by using the ray tracing software POV-Ray by using 
